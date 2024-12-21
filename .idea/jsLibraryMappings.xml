@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="PROJECT" libraries="{c01b4bae7d, f0dc5fab26, jquery-3.4.1, jquery-3.7.1, tailwindcss, tinymce}" />
+  </component>
+</project>
