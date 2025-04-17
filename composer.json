@@ -2,8 +2,7 @@
     "name": "mathi/snakes",
     "autoload": {
         "psr-4": {
-            "Class\\": "classes/",
-            "Config\\": "config/"
+            "App\\": "App/"
         }
     },
     "authors": [
@@ -12,5 +11,7 @@
             "email": "108459682+Mamath68@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-pdo": "*"
+    }
 }

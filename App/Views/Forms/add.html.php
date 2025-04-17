@@ -1,7 +1,7 @@
 <?php
 	
-	use Class\Snake;
-	use Class\SnakeManager;
+	use App\Class\Entities\Snake;
+	use App\Class\Managers\SnakeManager;
 	
 	if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		$name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );

@@ -1,8 +1,9 @@
 <?php
 	
-	namespace Config;
+	namespace App\Config;
 	
-	class SessionManager {
+	class SessionManager
+	{
 		
 		public static function start() : void
 		{

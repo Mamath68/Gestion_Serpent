@@ -1,11 +1,11 @@
 <?php
-	namespace Class;
 	
-	use Config\Database;
+	namespace App\Class\Managers;
+	
+	use App\Class\Entities\Snake;
+	use App\Config\Database;
 	use DateMalformedStringException;
 	use PDO;
-	
-	require_once "Snake.php";
 	
 	class SnakeManager
 	{

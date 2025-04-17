@@ -1,6 +1,6 @@
 <?php
 	
-	use Class\SnakeManager;
+	use App\Class\Managers\SnakeManager;
 	
 	$manager = new SnakeManager();
 	

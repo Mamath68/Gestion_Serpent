@@ -37,23 +37,23 @@ CREATE TABLE IF NOT EXISTS `snakes` (
 -- Listage des données de la table snakes_db.snakes : ~16 rows (environ)
 DELETE FROM `snakes`;
 INSERT INTO `snakes` (`id`, `name`, `weight`, `lifespan`, `birth_date`, `breed`, `gender`, `father_id`, `mother_id`, `is_dead`) VALUES
-	(3, 's1', 10, 20, '2020-04-16 09:00:00', 'Alsophis ater', 'Mâle', NULL, NULL, 0),
-	(4, 's2', 10, 10, '2020-04-16 09:00:00', 'Alsophis ater', 'Femelle', NULL, NULL, 0),
-	(8, 'noodle', 40.6, 12, '2025-04-16 09:21:00', 'Alsophis ater', 'Mâle', 3, 4, 0),
-	(10, 'aa1', 10, 150, '2020-07-16 12:36:00', 'Anaconda à taches sombres', 'Femelle', NULL, NULL, 0),
-	(11, 'aa2', 50, 150, '2020-02-16 12:36:00', 'Anaconda à taches sombres', 'Mâle', NULL, NULL, 0),
-	(12, 'baby_Sphinx_795', 36.2, 15, '2025-04-16 09:37:11', 'Anaconda à taches sombres', 'Femelle', 11, 10, 0),
-	(13, 'Slytherin', 2, 15, NULL, 'Python Royal', 'Mâle', NULL, NULL, 1),
-	(14, 'Slytherin', 1, 25, NULL, 'Serpent des blés', 'Mâle', NULL, NULL, 1),
-	(15, 'Slytherin', 2, 10, NULL, 'Cobra Royal', 'Femelle', NULL, NULL, 0),
-	(16, 'Anaconda', 6, 25, NULL, 'Cobra Royal', 'Mâle', NULL, NULL, 0),
-	(17, 'Python', 8, 10, NULL, 'Cobra Royal', 'Mâle', NULL, NULL, 0),
-	(18, 'Python', 1, 15, NULL, 'Cobra Royal', 'Femelle', NULL, NULL, 0),
-	(19, 'Slytherin', 6, 10, NULL, 'Serpent des blés', 'Femelle', NULL, NULL, 1),
-	(20, 'Python', 8, 10, NULL, 'Serpent des blés', 'Mâle', NULL, NULL, 1),
-	(21, 'Anaconda', 4, 5, NULL, 'Anaconda Vert', 'Mâle', NULL, NULL, 0),
-	(22, 'Viper', 5, 10, NULL, 'Serpent des blés', 'Mâle', NULL, NULL, 1),
-	(23, 'Mathieu Stamm', 500, 15, '2025-04-16 21:00:00', 'Python Royal', 'Mâle', NULL, NULL, 0);
+	(1, 's1', 10, 20, '2020-04-16 09:00:00', 'Alsophis ater', 'Mâle', NULL, NULL, 0),
+	(2, 's2', 10, 10, '2020-04-16 09:00:00', 'Alsophis ater', 'Femelle', NULL, NULL, 0),
+	(3, 'noodle', 40.6, 12, '2025-04-16 09:21:00', 'Alsophis ater', 'Mâle', 2, 5, 0),
+	(4, 'aa1', 10, 150, '2020-07-16 12:36:00', 'Anaconda à taches sombres', 'Femelle', NULL, NULL, 0),
+	(5, 'aa2', 50, 150, '2020-02-16 12:36:00', 'Anaconda à taches sombres', 'Mâle', NULL, NULL, 0),
+	(6, 'baby_Sphinx_795', 36.2, 15, '2025-04-16 09:37:11', 'Anaconda à taches sombres', 'Femelle', 11, 10, 0),
+	(7, 'Slytherin', 2, 15, NULL, 'Python Royal', 'Mâle', NULL, NULL, 1),
+	(8, 'Slytherin', 1, 25, NULL, 'Serpent des blés', 'Mâle', NULL, NULL, 1),
+	(9, 'Slytherin', 2, 10, NULL, 'Cobra Royal', 'Femelle', NULL, NULL, 0),
+	(10, 'Anaconda', 6, 25, NULL, 'Cobra Royal', 'Mâle', NULL, NULL, 0),
+	(11, 'Python', 8, 10, NULL, 'Cobra Royal', 'Mâle', NULL, NULL, 0),
+	(12, 'Python', 1, 15, NULL, 'Cobra Royal', 'Femelle', NULL, NULL, 0),
+	(13, 'Slytherin', 6, 10, NULL, 'Serpent des blés', 'Femelle', NULL, NULL, 1),
+	(14, 'Python', 8, 10, NULL, 'Serpent des blés', 'Mâle', NULL, NULL, 1),
+	(15, 'Anaconda', 4, 5, NULL, 'Anaconda Vert', 'Mâle', NULL, NULL, 0),
+	(16, 'Viper', 5, 10, NULL, 'Serpent des blés', 'Mâle', NULL, NULL, 1),
+	(17, 'Mathieu Stamm', 500, 15, '2025-04-16 21:00:00', 'Python Royal', 'Mâle', NULL, NULL, 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

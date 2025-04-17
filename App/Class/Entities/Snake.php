@@ -1,6 +1,6 @@
 <?php
 	
-	namespace Class;
+	namespace App\Class\Entities;
 	
 	use DateMalformedStringException;
 	use DateTime;

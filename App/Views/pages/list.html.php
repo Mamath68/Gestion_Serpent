@@ -1,62 +1,3 @@
-<?php
-	
-	use Class\SnakeManager;
-	use Config\Database;
-	
-	$db = Database::getInstance()->pdo;
-	
-	$manager = new SnakeManager();
-	
-	$allBreeds = $manager->getAllBreeds();
-	$breeded = filter_input( INPUT_GET, 'breed', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	// Gestion des filtres
-	$filters = [];
-	$genre = filter_input( INPUT_GET, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	if( isset( $genre ) && in_array( $genre, ['Mâle', 'Femelle'] ) ) {
-		$filters['gender'] = $genre;
-	}
-	$breed = filter_input( INPUT_GET, 'breed', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	if( !empty( $breed ) ) {
-		$filters['breed'] = $breed;
-	}
-	$min_weight = filter_input( INPUT_GET, 'min_weight', FILTER_SANITIZE_NUMBER_FLOAT );
-	if( isset( $min_weight ) && is_numeric( $min_weight ) ) {
-		$filters['weight_min'] = $min_weight;
-	}
-	$max_weight = filter_input( INPUT_GET, 'max_weight', FILTER_SANITIZE_NUMBER_FLOAT );
-	if( isset( $max_weight ) && is_numeric( $max_weight ) ) {
-		$filters['weight_max'] = $max_weight;
-	}
-	$status = filter_input( INPUT_GET, 'status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	if( isset( $status ) && in_array( $status, ['alive', 'dead'] ) ) {
-		$filters['status'] = $status;
-	}
-	
-	// Gestion du tri (id par défaut)
-	$orderBy = $_GET['sort'] ?? 'id';
-	$orderDirection = isset( $_GET['order'] ) && $_GET['order'] === 'desc' ? 'desc' : 'asc';
-	
-	// Gestion de la pagination (10 par page)
-	$side = isset( $_GET['side'] ) ? (int) $_GET['side'] : 1;
-	$itemsPerPage = 10;
-	$offset = ( $side - 1 ) * $itemsPerPage;
-	
-	// Récupérer les serpents avec les filtres, le tri et la pagination
-	$snakes = $manager->getAll( $filters, $orderBy, $orderDirection, $offset, $itemsPerPage );
-	
-	// Compter les serpents mâles et femelles sur la page actuelle
-	$maleCount = count( array_filter( $snakes, fn( $s ) => $s->gender === 'Mâle' ) );
-	$femaleCount = count( $snakes ) - $maleCount;
-	
-	// Compter le nombre total de serpents mâles et femelles
-	$totalMales = $manager->getTotalCount( array_merge( $filters, ['gender' => 'Mâle'] ) );
-	$totalFemales = $manager->getTotalCount( array_merge( $filters, ['gender' => 'Femelle'] ) );
-	
-	// Compter le nombre total de serpents pour la pagination
-	$totalSnakes = $manager->getTotalCount( $filters );
-	$totalPages = ceil( $totalSnakes / $itemsPerPage );
-?>
-
 <div class="container">
     <h1 class="text-center mb-4">Liste des serpents</h1>
     <div class="row">
@@ -65,7 +6,7 @@
                 <label for="gender" class="form-label">Genre :</label>
                 <select name="gender" id="gender" class="form-select">
                     <option value="">Tous</option>
-                    <option value="Mâle" <?= isset( $genre ) && $genre === 'Mâle' ? 'selected' : '' ?>>
+                    <option value="Male" <?= isset( $genre ) && $genre === 'Male' ? 'selected' : '' ?>>
                         Mâles
                     </option>
                     <option value="Femelle" <?= isset( $genre ) && $genre === 'Femelle' ? 'selected' : '' ?>>
@@ -110,7 +51,6 @@
 			
 			<?php
 				$generate = filter_input( INPUT_POST, 'generate', FILTER_SANITIZE_NUMBER_INT );
-				// Exemple de génération de 5 serpents :
 				if( isset( $generate ) ) {
 					$manager->generateRandomSnakes();
 					header( "Location: index.php?page=list" );

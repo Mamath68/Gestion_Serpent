@@ -1,7 +1,8 @@
 <?php
 	
-	namespace Class;
+	namespace App\Class;
 	
+	use App\Class\Entities\Snake;
 	use DateMalformedStringException;
 	
 	class Ecosystem

@@ -1,8 +1,8 @@
 <?php
 	
-	use Class\Ecosystem;
-	use Class\SnakeManager;
- 
+	use App\Class\Managers\SnakeManager;
+	use App\Class\Ecosystem;
+	
 	$manager = new SnakeManager();
 	$snakes = $manager->getAll();
 	
@@ -55,9 +55,9 @@
         <label for="male_id">Mâle :</label>
         <select name="male_id" id="male_id" required>
 			<?php foreach( $snakes as $s ): ?>
-				<?php if( $s->gender === 'male' && !$s->is_dead ): ?>
+				<?php if( $s->gender === 'Male' && !$s->is_dead ): ?>
                     <option value="<?= $s->id ?>"
-						<?= ( $selectedSnake && $selectedSnake->gender === 'male' && $selectedSnake->id == $s->id ) ? 'selected' : '' ?>>
+						<?= ( $selectedSnake && $selectedSnake->gender === 'Male' && $selectedSnake->id == $s->id ) ? 'selected' : '' ?>>
 						<?= htmlspecialchars( $s->name ) ?> (<?= $s->breed ?>)
                     </option>
 				<?php endif; ?>

@@ -1,6 +1,6 @@
 <?php
 	
-	use Class\SnakeManager;
+	use App\Class\Managers\SnakeManager;
 	
 	$manager = new SnakeManager();
 	try {
@@ -63,7 +63,7 @@
         <div class="my-3">
             <label for="gender" class="form-label">Sexe :</label>
             <select name="gender" id="gender" class="form-select">
-                <option value="Mâle" <?= $snake->gender === 'Mâle' ? 'selected' : '' ?>>Mâle</option>
+                <option value="Male" <?= $snake->gender === 'Male' ? 'selected' : '' ?>>Mâle</option>
                 <option value="Femelle" <?= $snake->gender === 'Femelle' ? 'selected' : '' ?>>Femelle</option>
             </select>
         </div>
