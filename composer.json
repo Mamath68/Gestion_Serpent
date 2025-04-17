@@ -1,0 +1,16 @@
+{
+    "name": "mathi/snakes",
+    "autoload": {
+        "psr-4": {
+            "Class\\": "classes/",
+            "Config\\": "config/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mathieu Stamm",
+            "email": "108459682+Mamath68@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
