@@ -1,36 +1,3 @@
-<?php
-	
-	use App\Class\Entities\Snake;
-	use App\Class\Managers\SnakeManager;
-	
-	if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-		$name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$weight = filter_input( INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT );
-		$lifespan = filter_input( INPUT_POST, 'lifespan', FILTER_SANITIZE_NUMBER_INT );
-		$birthday = filter_input( INPUT_POST, 'birth_date' );
-		$breed = filter_input( INPUT_POST, 'breed', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$gender = filter_input( INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$data = [
-			'name' => $name,
-			'weight' => $weight,
-			'lifespan' => $lifespan,
-			'birth_date' => $birthday,
-			'breed' => $breed,
-			'gender' => $gender,
-			'father_id' => $_POST['father_id'] ?? null,
-			'mother_id' => $_POST['mother_id'] ?? null,
-			'is_dead' => false
-		];
-		$manager = new SnakeManager();
-		try {
-			$manager->add( new Snake( $data ) );
-		} catch( DateMalformedStringException $e ) {
-			echo $e->getMessage();
-		}
-		header( "Location: index.php?page=list" );
-		exit;
-	}
-?>
 <h1 class="text-center mb-3">Ajout d'un nouveau serpent</h1>
 <div class="d-flex justify-content-center align-items-center">
     <form method="POST" class="formulaire w-100 max-w-50">

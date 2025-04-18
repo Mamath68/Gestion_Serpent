@@ -2,19 +2,32 @@
 	
 	namespace App\Class\Controllers;
 	
+	use App\Class\Entities\Snake;
 	use App\Class\Managers\SnakeManager;
 	use App\Config\Controller;
 	use DateMalformedStringException;
+	use JetBrains\PhpStorm\NoReturn;
 	
 	class SnakeController extends Controller
 	{
+		/**
+		 * @var SnakeManager
+		 */
 		private SnakeManager $manager;
+		/**
+		 * @var Ecosystem
+		 */
+		private Ecosystem $ecosystem;
 		
 		public function __construct()
 		{
 			$this->manager = new SnakeManager();
+			$this->ecosystem = new Ecosystem();
 		}
 		
+		/**
+		 * Afficher les Serpents
+		 */
 		public function index() : void
 		{
 			$allBreeds = $this->manager->getAllBreeds();
@@ -82,6 +95,10 @@
 			] );
 		}
 		
+		/**
+		 * Afficher le détail d'un Serpent
+		 *
+		 */
 		public function show() : void
 		{
 			$id = filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT );
@@ -130,10 +147,168 @@
 				echo $e->getMessage();
 			}
 		}
-
-// Méthode récursive pour récupérer les ancêtres
 		
 		/**
+		 * Ajouter un Serpent
+		 */
+		public function add() : void
+		{
+			if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+				$name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				$weight = filter_input( INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT );
+				$lifespan = filter_input( INPUT_POST, 'lifespan', FILTER_SANITIZE_NUMBER_INT );
+				$birthday = filter_input( INPUT_POST, 'birth_date' );
+				$breed = filter_input( INPUT_POST, 'breed', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				$gender = filter_input( INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+				$father_id = filter_input( INPUT_POST, 'father_id', FILTER_VALIDATE_INT );
+				$mother_id = filter_input( INPUT_POST, 'mother_id', FILTER_VALIDATE_INT );
+				$data = [
+					'name' => $name,
+					'weight' => $weight,
+					'lifespan' => $lifespan,
+					'birth_date' => $birthday,
+					'breed' => $breed,
+					'gender' => $gender,
+					'father_id' => $father_id ?? null,
+					'mother_id' => $mother_id ?? null,
+					'is_dead' => false
+				];
+				try {
+					$this->manager->add( new Snake( $data ) );
+				} catch( DateMalformedStringException $e ) {
+					echo $e->getMessage();
+				}
+				header( "Location: index.php?page=list" );
+				exit;
+			}
+			$this->render( 'Forms/add', ['title' => 'Donnez vie à un nouveau Serpent!'] );
+		}
+		
+		/**
+		 * Editer un Serpent
+		 *
+		 */
+		public function edit() : void
+		{
+			$id = filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT );
+			try {
+				$snake = isset( $id ) ? $this->manager->getById( $id ) : null;
+			} catch( DateMalformedStringException $e ) {
+				echo $e->getMessage();
+			}
+			
+			if( !$snake ) {
+				echo "Serpent introuvable.";
+				exit;
+			}
+			$name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$weight = filter_input( INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT );
+			$lifespan = filter_input( INPUT_POST, 'lifespan', FILTER_SANITIZE_NUMBER_INT );
+			$birthday = filter_input( INPUT_POST, 'birth_date' );
+			$breed = filter_input( INPUT_POST, 'breed', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$gender = filter_input( INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+				$snake->setName( $name );
+				$snake->setWeight( $weight );
+				$snake->setLifespan( $lifespan );
+				$snake->setBirthDate( $birthday );
+				$snake->setBreed( $breed );
+				$snake->setGender( $gender );
+				$manager->update( $snake );
+				header( "Location: index.php?page=list" );
+				exit;
+			}
+			if( !$id ) {
+				http_response_code( 400 );
+				$this->renderError( 400, ['title' => 'ID manquant'] );
+				return;
+			}
+			
+			$this->render( 'Forms/edit', [
+				'title' => 'Éditer un Serpent',
+				'id' => $id,
+				'snake' => $snake
+			] );
+		}
+		
+		/**
+		 * Accoupler 2 serpents
+		 *
+		 */
+		public function breed() : void
+		{
+			$snakes = $this->manager->getAll();
+			$id = filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT );
+			$selectedId = $id ?? null;
+			
+			$selectedSnake = null;
+			$male = null;
+			$female = null;
+			$message = '';
+			
+			try {
+				$selectedSnake = $selectedId ? $this->manager->getById( $selectedId ) : null;
+			} catch( DateMalformedStringException $e ) {
+				echo $e->getMessage();
+			}
+			
+			if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+				try {
+					$male = $this->manager->getById( $_POST['male_id'] );
+					$female = $this->manager->getById( $_POST['female_id'] );
+				} catch( DateMalformedStringException $e ) {
+					echo $e->getMessage();
+				}
+				
+				if( $male && $female ) {
+					try {
+						$baby = $this->ecosystem->breed( $male, $female );
+						if( $baby ) {
+							$this->manager->add( $baby );
+							header( 'Location: index.php?page=list' );
+							exit;
+						} else {
+							$message = "L'accouplement a échoué. Vérifie la compatibilité.";
+						}
+					} catch( DateMalformedStringException $e ) {
+						echo $e->getMessage();
+					}
+				}
+			}
+			
+			$this->render( 'Forms/breed', [
+				'title' => 'Accouplement des Serpents',
+				'snakes' => $snakes,
+				'selectedSnake' => $selectedSnake,
+				'message' => $message,
+			] );
+		}
+		
+		/**
+		 * Supprimer un Serpent
+		 */
+		#[NoReturn] public function delete() : void
+		{
+			$id = filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT ) ?? null;
+			
+			if( $id ) {
+				$this->manager->delete( $id );
+			}
+			
+			header( "Location: index.php?page=list" );
+			exit;
+		}
+		
+		/**
+		 * Fonctions allant avec l'accouplement de serpents
+		 */
+		/**
+		 * Récupère les Ancètres d'un Serpent
+		 *
+		 * @param int|null $id
+		 * @param array    $result
+		 * @param int      $level
+		 *
 		 * @throws DateMalformedStringException
 		 */
 		private function collectAncestors( ?int $id, array &$result, int $level = 1 ) : void
@@ -146,48 +321,23 @@
 				$this->collectAncestors( $ancestor->mother_id, $result, $level + 1 );
 			}
 		}
-
-// Méthode récursive pour récupérer les descendants
-		private function collectDescendants( int $id, array &$result, int $level = 1 ) : void
+		
+		/**
+		 *
+		 * Recupère les Descendants d'un Serpent
+		 *
+		 * @param int   $id
+		 * @param array $result
+		 * @param int   $level
+		 *
+		 * @return void
+		 */
+		private function collectDescendants( int $id, array $result, int $level = 1 ) : void
 		{
 			$children = $this->manager->getChildren( $id );
 			foreach( $children as $child ) {
 				$result[] = ['level' => $level, 'snake' => $child];
 				$this->collectDescendants( $child->id, $result, $level + 1 );
 			}
-		}
-		
-		public function breed() : void
-		{
-			$this->render( 'pages/breed', ['title' => 'Accouplement des Serpents'] );
-		}
-		
-		public function add() : void
-		{
-			$this->render( 'Forms/add', ['title' => 'Donnez vie à un nouveau Serpent!'] );
-		}
-		
-		public function edit() : void
-		{
-			$id = $_GET['id'] ?? null;
-			if( !$id ) {
-				http_response_code( 400 );
-				$this->renderError( 400, ['title' => 'ID manquant'] );
-				return;
-			}
-			
-			$this->render( 'Forms/edit', ['title' => 'Éditer un Serpent', 'id' => $id] );
-		}
-		
-		public function delete() : void
-		{
-			$id = $_GET['id'] ?? null;
-			if( !$id ) {
-				http_response_code( 400 );
-				$this->renderError( 400, ['title' => 'ID manquant'] );
-				return;
-			}
-			
-			$this->render( 'Forms/delete', ['title' => 'Suppression d\'un Serpent', 'id' => $id] );
 		}
 	}

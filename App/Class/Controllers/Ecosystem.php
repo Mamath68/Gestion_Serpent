@@ -1,6 +1,6 @@
 <?php
 	
-	namespace App\Class;
+	namespace App\Class\Controllers;
 	
 	use App\Class\Entities\Snake;
 	use DateMalformedStringException;

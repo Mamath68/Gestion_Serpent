@@ -6,7 +6,7 @@
 	{
 		public function render( string $view, array $params = [] ) : void
 		{
-			extract( $params, EXTR_SKIP );
+			extract( $params );
 			
 			$viewPath = VIEW_DIR . "/$view.html.php";
 			
@@ -26,7 +26,7 @@
 		public function renderError( int $code, array $params = [] ) : void
 		{
 			$params['code'] = $code;
-			extract( $params, EXTR_SKIP );
+			extract( $params );
 			
 			$errorView = VIEW_DIR . "/errors/$code.html.php";
 			if( !file_exists( $errorView ) ) {

@@ -1,38 +1,3 @@
-<?php
-	
-	use App\Class\Managers\SnakeManager;
-	
-	$manager = new SnakeManager();
-	try {
-		$id = filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT );
-		$snake = isset( $id ) ? $manager->getById( $id ) : null;
-	} catch( DateMalformedStringException $e ) {
-		echo $e->getMessage();
-	}
-	
-	if( !$snake ) {
-		echo "Serpent introuvable.";
-		exit;
-	}
-	$name = filter_input( INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	$weight = filter_input( INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT );
-	$lifespan = filter_input( INPUT_POST, 'lifespan', FILTER_SANITIZE_NUMBER_INT );
-	$birthday = filter_input( INPUT_POST, 'birth_date' );
-	$breed = filter_input( INPUT_POST, 'breed', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	$gender = filter_input( INPUT_POST, 'gender', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-	if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-		$snake->setName( $name );
-		$snake->setWeight( $weight );
-		$snake->setLifespan( $lifespan );
-		$snake->setBirthDate( $birthday );
-		$snake->setBreed( $breed );
-		$snake->setGender( $gender );
-		$manager->update( $snake );
-		header( "Location: index.php?page=list" );
-		exit;
-	}
-?>
-
 <h1 class="text-center mb-3">Modifier le serpent : <?= $snake->name ?></h1>
 
 <div class="d-flex justify-content-center align-items-center">
