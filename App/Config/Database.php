@@ -29,6 +29,7 @@
 			try {
 				$this->pdo = new PDO( "mysql:host=$dbhost;port=$dbport;dbname=$dbname;charset=$dbcharset", $dbuser, $dbpass, [
 					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+					PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
 				] );
 			} catch( PDOException $e ) {
 				die( "Erreur de connexion à la base de données: " . $e->getMessage() );

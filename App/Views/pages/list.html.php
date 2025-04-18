@@ -44,8 +44,8 @@
                 <button type="submit" class="btn btn-success">Filtrer</button>
             </form>
         </div>
-        <div class="col">
-            <form method="post" class="formulaire" action="index.php?page=list">
+        <div class="col d-flex justify-content-center align-items-center">
+            <form method="post" class="formulaire w-100 max-w-50" action="index.php?page=list">
                 <button class="btn btn-primary" type="submit" name="generate">Générer des serpents aléatoires</button>
             </form>
 			
@@ -131,7 +131,7 @@
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation" class="my-4">
+    <nav aria-label="Pagination" class="my-4">
         <ul class="pagination justify-content-center">
             <li class="page-item <?= $side <= 1 ? 'disabled' : '' ?>">
                 <a class="page-link" href="<?= $side > 1 ? '?' . http_build_query( [
@@ -158,6 +158,4 @@
             </li>
         </ul>
     </nav>
-
-
 </div>

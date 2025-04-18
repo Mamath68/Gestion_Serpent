@@ -53,11 +53,13 @@
 			if( isset( $status ) && in_array( $status, ['alive', 'dead'] ) ) {
 				$filters['status'] = $status;
 			}
+			$sort = filter_input( INPUT_GET, 'sort', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$side = filter_input( INPUT_GET, 'side', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$orderBy = $sort ?? 'id';
+			$orderDirection = isset( $order ) && $order === 'desc' ? 'desc' : 'asc';
 			
-			$orderBy = $_GET['sort'] ?? 'id';
-			$orderDirection = isset( $_GET['order'] ) && $_GET['order'] === 'desc' ? 'desc' : 'asc';
-			
-			$side = isset( $_GET['side'] ) ? (int) $_GET['side'] : 1;
+			$side = isset( $side ) ? (int) $side : 1;
 			$itemsPerPage = 10;
 			$offset = ( $side - 1 ) * $itemsPerPage;
 			
@@ -254,8 +256,10 @@
 			
 			if( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 				try {
-					$male = $this->manager->getById( $_POST['male_id'] );
-					$female = $this->manager->getById( $_POST['female_id'] );
+					$male_id = filter_input( INPUT_POST, 'male_id', FILTER_VALIDATE_INT );
+					$female_id = filter_input( INPUT_POST, 'female_id', FILTER_VALIDATE_INT );
+					$male = $this->manager->getById( $male_id );
+					$female = $this->manager->getById( $female_id );
 				} catch( DateMalformedStringException $e ) {
 					echo $e->getMessage();
 				}

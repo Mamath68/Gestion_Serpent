@@ -58,9 +58,12 @@
 			$stmt = $this->pdo->prepare( $sql );
 			$stmt->execute( $params );
 			
-			return array_map( /**
+			return array_map(
+			/**
+			 *
 			 * @throws DateMalformedStringException
-			 */ fn( $s ) => new Snake( $s ), $stmt->fetchAll( PDO::FETCH_ASSOC ) );
+			 */
+				fn( $s ) => new Snake( $s ), $stmt->fetchAll() );
 		}
 		
 		public function getTotalCount( $filters = [] )
@@ -133,7 +136,7 @@
 		{
 			$stmt = $this->pdo->prepare( "SELECT * FROM snakes WHERE id = ?" );
 			$stmt->execute( [$id] );
-			$data = $stmt->fetch( PDO::FETCH_ASSOC );
+			$data = $stmt->fetch();
 			return $data ? new snake( $data ) : null;
 		}
 		
@@ -142,7 +145,7 @@
 			$stmt = $this->pdo->prepare( "SELECT * FROM snakes WHERE father_id = :id OR mother_id = :id" );
 			$stmt->execute( ['id' => $id] );
 			
-			$data = $stmt->fetchAll( PDO::FETCH_ASSOC );
+			$data = $stmt->fetchAll();
 			
 			return array_map( /**
 			 * @throws DateMalformedStringException
@@ -154,7 +157,7 @@
 			$stmt = $this->pdo->prepare( "SELECT * FROM snakes WHERE father_id = :father AND mother_id = :mother AND id != :self" );
 			$stmt->execute( ['father' => $fatherId, 'mother' => $motherId, 'self' => $selfId] );
 			
-			$data = $stmt->fetchAll( PDO::FETCH_ASSOC );
+			$data = $stmt->fetchAll();
 			
 			return array_map( /**
 			 * @throws DateMalformedStringException

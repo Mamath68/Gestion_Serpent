@@ -173,16 +173,16 @@
 		 */
 		public function __construct( $data )
 		{
-			$this->id = $data['id'] ?? null;
-			$this->name = $data['name'] ?? '';
-			$this->weight = $data['weight'] ?? 0;
-			$this->lifespan = $data['lifespan'] ?? 0;
-			$this->birth_date = $data['birth_date'] ?? '';
-			$this->breed = $data['breed'] ?? '';
-			$this->gender = $data['gender'] ?? '';
-			$this->father_id = $data['father_id'] ?? null;
-			$this->mother_id = $data['mother_id'] ?? null;
-			$this->is_dead = $data['is_dead'] ?? false;
+			$this->id = $data->id ?? null;
+			$this->name = $data->name ?? '';
+			$this->weight = $data->weight ?? 0;
+			$this->lifespan = $data->lifespan ?? 0;
+			$this->birth_date = $data->birth_date ?? '';
+			$this->breed = $data->breed ?? '';
+			$this->gender = $data->gender ?? '';
+			$this->father_id = $data->father_id ?? null;
+			$this->mother_id = $data->mother_id ?? null;
+			$this->is_dead = $data->is_dead ?? false;
 			
 			$this->updateDeathStatus();
 		}
