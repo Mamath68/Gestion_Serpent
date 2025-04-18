@@ -33,24 +33,6 @@
 					$sql .= " AND breed = :breed";
 					$params[':breed'] = $filters['breed'];
 				}
-				
-				// if (!empty($filters['min_weight']) && !empty($filters['max_weight'])) {
-				//   $sql .= " AND weight BETWEEN :min_weight AND :max_weight";
-				//   $params[':min_weight'] = $filters['min_weight'];
-				//   $params[':max_weight'] = $filters['max_weight'];
-				// } elseif (!empty($filters['min_weight'])) {
-				//   $sql .= " AND weight >= :min_weight";
-				//   $params[':min_weight'] = $filters['min_weight'];
-				// } elseif (!empty($filters['max_weight'])) {
-				//   $sql .= " AND weight <= :max_weight";
-				//   $params[':max_weight'] = $filters['max_weight'];
-				// }
-				
-				// if (isset($filters['is_dead'])) {
-				//   $sql .= " AND is_dead = :is_dead";
-				//   // 1 pour mort, 0 pour vivant
-				//   $params[':is_dead'] = $filters['is_dead'] ? 1 : 0;
-				// }
 			}
 			
 			$sql .= " ORDER BY $orderBy $orderDirection LIMIT $offset, $limit";

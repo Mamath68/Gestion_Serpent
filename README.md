@@ -12,7 +12,7 @@ Une application PHP orientée objet permettant de gérer une base de données de
 
 ### 1. Prérequis
 
-- PHP 8+
+- PHP 8.4
 - Serveur web (Apache ou Nginx)
 - MySQL ou MariaDB
 - Navigateur moderne

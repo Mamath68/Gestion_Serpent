@@ -2,6 +2,7 @@
 	
 	namespace App\Class\Controllers;
 	
+	use App\Class\Entities\GenealogyEntry;
 	use App\Class\Entities\Snake;
 	use App\Class\Managers\SnakeManager;
 	use App\Config\Controller;
@@ -65,7 +66,7 @@
 			
 			$snakes = $this->manager->getAll( $filters, $orderBy, $orderDirection, $offset, $itemsPerPage );
 			
-			$maleCount = count( array_filter( $snakes, fn( $s ) => $s->gender === 'Mâle' ) );
+			$maleCount = count( array_filter( $snakes, fn( $s ) => $s->gender === 'Male' ) );
 			$femaleCount = count( $snakes ) - $maleCount;
 			
 			$totalMales = $this->manager->getTotalCount( array_merge( $filters, ['gender' => 'Male'] ) );
@@ -74,7 +75,7 @@
 			$totalSnakes = $this->manager->getTotalCount( $filters );
 			$totalPages = ceil( $totalSnakes / $itemsPerPage );
 			$this->render( 'pages/list', [
-				'title' => 'Liste des serpents',
+				'title' => 'Vivarium STAMM',
 				'snakes' => $snakes,
 				'allBreeds' => $allBreeds,
 				'genre' => $genre,
@@ -99,7 +100,6 @@
 		
 		/**
 		 * Afficher le détail d'un Serpent
-		 *
 		 */
 		public function show() : void
 		{
@@ -304,7 +304,7 @@
 		}
 		
 		/**
-		 * Fonctions allant avec l'accouplement de serpents
+		 * Fonctions allant avec le détail d'un serpent
 		 */
 		/**
 		 * Récupère les Ancètres d'un Serpent
@@ -320,27 +320,17 @@
 			if( !$id ) return;
 			$ancestor = $this->manager->getById( $id );
 			if( $ancestor ) {
-				$result[] = ['level' => $level, 'snake' => $ancestor];
+				$result[] = new GenealogyEntry( $level, $ancestor );
 				$this->collectAncestors( $ancestor->father_id, $result, $level + 1 );
 				$this->collectAncestors( $ancestor->mother_id, $result, $level + 1 );
 			}
 		}
 		
-		/**
-		 *
-		 * Recupère les Descendants d'un Serpent
-		 *
-		 * @param int   $id
-		 * @param array $result
-		 * @param int   $level
-		 *
-		 * @return void
-		 */
-		private function collectDescendants( int $id, array $result, int $level = 1 ) : void
+		private function collectDescendants( int $id, array &$result, int $level = 1 ) : void
 		{
 			$children = $this->manager->getChildren( $id );
 			foreach( $children as $child ) {
-				$result[] = ['level' => $level, 'snake' => $child];
+				$result[] = new GenealogyEntry( $level, $child );
 				$this->collectDescendants( $child->id, $result, $level + 1 );
 			}
 		}

@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="text-center mb-4">Liste des serpents</h1>
+    <h1 class="text-center mb-4">Bienvenue dans mon Vivarium</h1>
     <div class="row">
         <div class="col">
             <form method="get" class="formulaire">
@@ -18,29 +18,9 @@
                 <select name="breed" id="breed" class="form-select">
                     <option value="">Toutes</option>
 					<?php foreach( $allBreeds as $breed ): ?>
-                        <option value="<?= $breed ?>" <?= isset( $breeded ) && $breeded === $breed ? 'selected' : '' ?>><?= htmlspecialchars( $breed ) ?></option>
+                        <option value="<?= $breed ?>" <?= isset( $breeded ) && $breeded === $breed ? 'selected' : '' ?>><?= $breed ?></option>
 					<?php endforeach; ?>
                 </select>
-
-                <!--<label for="min_weight">Poids Min :</label>
-                <input type="number" name="min_weight" id="min_weight"
-                       value="<?= htmlspecialchars( $min_weight ?? '' ) ?>">
-
-                <label for="max_weight">Poids Max :</label>
-                <input type="number" name="max_weight" id="max_weight"
-                       value="<?= htmlspecialchars( $max_weight ?? '' ) ?>">
-
-                <label for="is_dead">Statut (Mort/Vivant) :</label>
-                <select name="is_dead" id="is_dead">
-                    <option value="">Tous</option>
-                    <?php $isDead = filter_input( INPUT_GET, 'is_dead', FILTER_VALIDATE_BOOL ) ?>
-                    <option value="1" <?= isset( $isDead ) && $isDead == 1 ? 'selected' : '' ?>>Mort
-                    </option>
-                    <option value="0" <?= isset( $isDead ) && $isDead == 0 ? 'selected' : '' ?>>
-                        Vivant
-                    </option>
-                </select>-->
-
                 <button type="submit" class="btn btn-success">Filtrer</button>
             </form>
         </div>
@@ -102,11 +82,11 @@
         <tbody>
 		<?php foreach( $snakes as $s ): ?>
             <tr>
-                <td><?= htmlspecialchars( $s->name ) ?></td>
-                <td><?= htmlspecialchars( $s->weight ) ?> g</td>
-                <td><?= htmlspecialchars( $s->breed ) ?></td>
-                <td><?= htmlspecialchars( ucfirst( $s->gender ) ) ?></td>
-                <td><?= htmlspecialchars( $s->lifespan ) ?> ans</td>
+                <td><?= $s->name ?></td>
+                <td><?= $s->weight ?> g</td>
+                <td><?= $s->breed ?></td>
+                <td><?= ucfirst( $s->gender ) ?></td>
+                <td><?= $s->lifespan ?> ans</td>
                 <td><?= $s->is_dead ? 'Oui' : 'Non' ?></td>
                 <td>
                     <a href="index.php?page=edit&id=<?= $s->id ?>" class="btn btn-warning">Modifier</a>

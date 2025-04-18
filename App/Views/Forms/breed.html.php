@@ -10,9 +10,9 @@
                 <label for="male_id" class="form-label">Mâle :</label>
                 <select name="male_id" id="male_id" class="form-select" required>
 					<?php foreach( $snakes as $s ): ?>
-						<?php if( $s->gender === 'Mâle' && !$s->is_dead ): ?>
+						<?php if( $s->gender === 'Male' && !$s->is_dead ): ?>
                             <option value="<?= $s->id ?>"
-								<?= ( $selectedSnake && $selectedSnake->gender === 'Mâle' && $selectedSnake->id == $s->id ) ? 'selected' : '' ?>>
+								<?= ( $selectedSnake && $selectedSnake->gender === 'Male' && $selectedSnake->id == $s->id ) ? 'selected' : '' ?>>
 								<?= htmlspecialchars( $s->name ) ?> (<?= $s->breed ?>)
                             </option>
 						<?php endif; ?>

@@ -63,7 +63,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setId( ?int $id ) : self
+		public function setId( ?int $id ) : Snake
 		{
 			$this->id = $id;
 			return $this;
@@ -74,7 +74,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setBirthDate( DateTime | string | null $birth_date ) : self
+		public function setBirthDate( DateTime | string | null $birth_date ) : Snake
 		{
 			$this->birth_date = $birth_date;
 			return $this;
@@ -85,7 +85,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setBreed( ?string $breed ) : self
+		public function setBreed( ?string $breed ) : Snake
 		{
 			$this->breed = $breed;
 			return $this;
@@ -96,7 +96,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setFatherId( mixed $father_id ) : self
+		public function setFatherId( mixed $father_id ) : Snake
 		{
 			$this->father_id = $father_id;
 			return $this;
@@ -107,7 +107,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setGender( ?string $gender ) : self
+		public function setGender( ?string $gender ) : Snake
 		{
 			$this->gender = $gender;
 			return $this;
@@ -118,7 +118,7 @@
 		 *
 		 * @return Snake
 		 * */
-		public function setIsDead( ?bool $is_dead ) : self
+		public function setIsDead( ?bool $is_dead ) : Snake
 		{
 			$this->is_dead = $is_dead;
 			return $this;
@@ -129,7 +129,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setLifespan( ?float $lifespan ) : self
+		public function setLifespan( ?float $lifespan ) : Snake
 		{
 			$this->lifespan = $lifespan;
 			return $this;
@@ -140,7 +140,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setMotherId( mixed $mother_id ) : self
+		public function setMotherId( mixed $mother_id ) : Snake
 		{
 			$this->mother_id = $mother_id;
 			return $this;
@@ -151,7 +151,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setName( ?string $name ) : self
+		public function setName( ?string $name ) : Snake
 		{
 			$this->name = $name;
 			return $this;
@@ -162,7 +162,7 @@
 		 *
 		 * @return Snake
 		 */
-		public function setWeight( ?float $weight ) : self
+		public function setWeight( ?float $weight ) : Snake
 		{
 			$this->weight = $weight;
 			return $this;
